@@ -61,6 +61,7 @@ pub fn player_input(
             }
         };
 
+        // TODO: Can refactor this into a WantsToHeal intent
         if !did_something {
             if let Ok(health) = ecs
                 .entry_mut(player_entity)

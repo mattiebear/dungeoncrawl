@@ -4,6 +4,8 @@ use crate::prelude::*;
 #[read_component(WantsToAttack)]
 #[write_component(Health)]
 pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
+    // First time this runs the player is the only attacker.
+    // Second time it's all of the enemies
     let mut attackers = <(Entity, &WantsToAttack)>::query();
 
     let victims: Vec<(Entity, Entity)> = attackers
@@ -11,7 +13,7 @@ pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
         .map(|(entity, attack)| (*entity, attack.victim))
         .collect();
 
-    victims.iter().for_each(|(message, victim)| {
+    victims.iter().for_each(|(intent, victim)| {
         if let Ok(health) = ecs
             .entry_mut(*victim) // This is how we query the health when all we have is the Entity
             .unwrap()
@@ -27,6 +29,6 @@ pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
             println!("Health after attack: {}", health.current);
         }
 
-        commands.remove(*message);
+        commands.remove(*intent);
     })
 }

@@ -4,14 +4,16 @@ use crate::prelude::*;
 #[system(for_each)]
 #[read_component(Player)]
 pub fn movement(
-    entity: &Entity,
+    intent: &Entity,
     want_move: &WantsToMove,
     #[resource] map: &Map,
     #[resource] camera: &mut Camera,
     ecs: &mut SubWorld,
     commands: &mut CommandBuffer,
 ) {
+    // This will run twice, once for the player and once for all enemies
     if map.can_enter_tile(want_move.destination) {
+        // Updates the Point of the entity to be the new position
         commands.add_component(want_move.entity, want_move.destination);
 
         if ecs
@@ -24,5 +26,5 @@ pub fn movement(
         }
     }
 
-    commands.remove(*entity)
+    commands.remove(*intent)
 }

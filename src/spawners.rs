@@ -5,8 +5,8 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
         pos,
         Player,
         Health {
-            current: 20,
-            max: 20,
+            current: 10,
+            max: 10,
         },
         Render {
             color: ColorPair::new(WHITE, BLACK),
@@ -24,7 +24,7 @@ pub fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Poin
     ecs.push((
         pos,
         Enemy,
-        MovingRandomly,
+        ChasingPlayer,
         Name(name),
         Health {
             current: hp,
