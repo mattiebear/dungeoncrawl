@@ -3,6 +3,7 @@ use crate::prelude::*;
 // Shorthand for running a single query in this system. Tells it to query on Entity and WantsToMove
 #[system(for_each)]
 #[read_component(Player)]
+#[read_component(FieldOfView)]
 pub fn movement(
     intent: &Entity,
     want_move: &WantsToMove,
